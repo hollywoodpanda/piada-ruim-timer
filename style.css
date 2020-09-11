@@ -1,0 +1,58 @@
+@font-face {
+    font-family: Yanone_Kaffeesatz;
+    src: url(fonts/Yanone_Kaffeesatz/YanoneKaffeesatz-VariableFont_wght.ttf)
+}
+
+body {
+
+    background-image: linear-gradient(to bottom, rgba(255, 254, 254, 0.9), rgba(0, 0, 0, 0.7)), url("res/its-time.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+#main-box {
+
+    font-family: Yanone_Kaffeesatz;
+
+}
+
+#counter-box {
+
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+
+}
+
+#counter-title {
+
+    font-size: 6rem;
+    font-weight: lighter;
+
+}
+
+#time-box {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem;
+    justify-content: center;
+    margin-top: -10em;
+
+}
+
+#time-box > div[id$='box'] > h1[id$='text'] {
+
+    font-size: 8rem;
+
+}
+
+#time-box > div[id$='box'] > h4[id$='title'] {
+
+    margin-top: -3em;
+    font-size: 2rem;
+
+}
