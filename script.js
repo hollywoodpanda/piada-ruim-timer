@@ -15,7 +15,7 @@ const longtimeImage = 'res/long-time.jpg'
 
 const setTimerVisible = (visible) => {
 
-    const visibility = visible ? 'visible' : 'none'
+    const visibility = visible ? 'flex' : 'none'
 
     timeBoxComp.style.display = visibility
 
