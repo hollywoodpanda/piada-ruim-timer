@@ -37,8 +37,10 @@ const calculateTime = () => {
 
     const now = new Date()
 
+    const sexta = 5
+
     // é sexta
-    if (now.getDay() === 5) {
+    if (now.getDay() === sexta) {
 
         setBackgroundImage(nowImage)
         setTitle('😓 É Hoje')
@@ -56,7 +58,7 @@ const calculateTime = () => {
     nextFriday.setHours(0)
     nextFriday.setMinutes(0)
     nextFriday.setSeconds(0)
-    nextFriday.setDate(nextFriday.getDate() + (12 - nextFriday.getDay()) % 7)
+    nextFriday.setDate(nextFriday.getDate() + (sexta + 7 - nextFriday.getDay()) % 7)
 
     if (nextFriday.getDay() >= 4) {
 
