@@ -4,6 +4,7 @@ let minutesComp = null
 let secondsComp = null
 let titleComp   = null
 let bodyComp    = null
+let timeBoxComp = null
 
 const backgroundGradient =
   'linear-gradient(to bottom, rgba(255, 254, 254, 0.9), rgba(0, 0, 0, 0.7))'
@@ -16,12 +17,7 @@ const setTimerVisible = (visible) => {
 
     const visibility = visible ? 'visible' : 'none'
 
-    daysComp.style.display = visibility 
-    hoursComp.style.display = visibility  
-    minutesComp.style.display = visibility
-    secondsComp.style.display = visibility
-    titleComp.style.display = visibility
-    bodyComp.style.display = visibility
+    timeBoxComp.style.display = visibility
 
 }
 
@@ -44,10 +40,8 @@ const calculateTime = () => {
     // é sexta
     if (now.getDay() === 5) {
 
-        console.log('😓 Chegou o dia, infelizmente')
-
         setBackgroundImage(nowImage)
-        setTitle('😧 É Hoje')
+        setTitle('😓 É Hoje')
         setTimerVisible(false)
         return
 
@@ -91,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function(evt) {
     minutesComp = document.querySelector('#minutes-text')
     secondsComp = document.querySelector('#seconds-text')
     titleComp   = document.querySelector('#counter-title')
+    timeBoxComp = document.querySelector('#time-box')
     bodyComp    = document.body
 
     // Roda agora...
