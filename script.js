@@ -142,7 +142,9 @@ const calculateTime = () => {
     const hoje = new Date()
 
     // é o dia de piada ruim e estamos dentro do intervalo de horário habilitado 😲 
-    if (hoje.getDay() === diaDePiadaRuim && horarioSaida > hoje.getHours()) {
+    if (hoje.getDay() === diaDePiadaRuim && 
+        horarioSaida > hoje.getHours() && 
+        horarioEntrada <= hoje.getHours()) {
 
         // Definimos a imagem que é hoje
         setBackgroundImage(nowImage)
@@ -170,12 +172,16 @@ const calculateTime = () => {
 
     /* 
      * Ixe! Hoje É o dia de piada ruim 
-     * mas já acabou o horário de trabalho...
+     * mas já acabou o horário de trabalho
+     * (ou nem começou ainda 🤦 )...
      * (o cálculo do próximo dia nos deu hoje 🤦)
      * Adicionamos sete dias no 'hoje' e boas
      */
-    if (proximoDiaNoMes === hoje.getDate()) {
+    if (proximoDiaNoMes === hoje.getDate() && 
+        horarioSaida <= hoje.getHours()) {
+
         proximoDiaNoMes += 7 // 🤷 
+
     }
 
     // Deu 'horarioEntrada' então começa o 
@@ -211,7 +217,7 @@ const calculateTime = () => {
     secondsComp.innerHTML = Math.floor(diff.getTime() / 1000) % 60
     // ... os minutos
     minutesComp.innerHTML = Math.floor(diff.getTime() / 1000 / 60) % 60;
-    // ... os segundos 😴 
+    // ... as horas! 🎉 
     hoursComp.innerHTML = Math.floor(diff.getTime() / 1000 / 60 / 60) % 24;
     // ... e finalmente os dias!
     daysComp.innerHTML = Math.floor(diff.getTime() / 1000 / 60 / 60 / 24);
