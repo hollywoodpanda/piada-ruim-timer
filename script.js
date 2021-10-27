@@ -72,6 +72,16 @@ let bodyComp    = null
 // O container com os horários
 let timeBoxComp = null
 
+// O componente de label dos dias
+let daysLabelComp       = null
+// O componente de label de horas
+let hoursLabelComp      = null
+// O componente de label de minutos
+let minutesLabelComp    = null
+// O componente de label de segundos
+let secondsLabelComp    = null
+
+
 // A regra de gradiente na imagem de fundo
 const backgroundGradient =
   'linear-gradient(to bottom, rgba(255, 254, 254, 0.9), rgba(0, 0, 0, 0.7))'
@@ -123,6 +133,35 @@ const setTitle = (title) => {
     titleComp.innerHTML = title
 
 }
+
+/**
+ * Ajusta texto das labels dependendo da quantidade de dias faltando para piada
+ * ruim.
+ * 
+ * Se falta mais de um dia, então usamos texto no plural. Se falta menos que um dia,
+ * texto fica no singular.
+ * 
+ * @param {Number|String} days Quantidade de dias que faltam para piada ruim
+ * @param {Number|String} hours Quantidade de horas que faltam para piada ruim
+ * @param {Number|String} minutes Quantidade de minutos que faltam para piada ruim
+ * @param {Number|String} seconds Quantidade de segundos que faltam para piada ruim
+ */
+const adjustLabels = (
+    days,
+    hours,
+    minutes,
+    seconds
+) => {
+
+    // Se valor for diferente de 1, 
+    // usamos plural (daí atende múltiplos e o zero)
+
+    daysLabelComp.innerHTML     = Number(days) != 1 ? 'dias' : 'dia'
+    hoursLabelComp.innerHTML    = Number(hours) != 1 ? 'horas' : 'hora'
+    minutesLabelComp.innerHTML  = Number(minutes) != 1 ? 'minutos' : 'minuto'
+    secondsLabelComp.innerHTML  = Number(seconds) != 1 ? 'segundos' : 'segundo' 
+
+} 
 
 /**
  * Calcula o tempo restante para o dia/horário
@@ -214,27 +253,73 @@ const calculateTime = () => {
     const diff = new Date(proximoDia.getTime() - hoje.getTime())
 
     // Calculamos os segundos faltantes
-    secondsComp.innerHTML = Math.floor(diff.getTime() / 1000) % 60
+    const secondsToBadJoke = Math.floor(diff.getTime() / 1000) % 60
     // ... os minutos
-    minutesComp.innerHTML = Math.floor(diff.getTime() / 1000 / 60) % 60;
+    const minutesToBadJoke = Math.floor(diff.getTime() / 1000 / 60) % 60;
     // ... as horas! 🎉 
-    hoursComp.innerHTML = Math.floor(diff.getTime() / 1000 / 60 / 60) % 24;
+    const hoursToBadJoke = Math.floor(diff.getTime() / 1000 / 60 / 60) % 24;
     // ... e finalmente os dias!
-    daysComp.innerHTML = Math.floor(diff.getTime() / 1000 / 60 / 60 / 24);
+    const daysToBadJoke = Math.floor(diff.getTime() / 1000 / 60 / 60 / 24);
 
+    // Calculamos as labels...
+    adjustLabels(
+        daysToBadJoke,
+        hoursToBadJoke,
+        minutesToBadJoke,
+        secondsToBadJoke
+    )
+
+    // Calculamos os segundos faltantes
+    secondsComp.innerHTML = secondsToBadJoke
+    // ... os minutos
+    minutesComp.innerHTML = minutesToBadJoke
+    // ... as horas! 🎉 
+    hoursComp.innerHTML = hoursToBadJoke
+    // ... e finalmente os dias! 🤞 
+    daysComp.innerHTML = daysToBadJoke
+
+}
+
+/**
+ * Recuperamos os componentes de contagem 
+ * 
+ * @param {*} doc O documento para recuperar os componentes html por 'query selector'
+ */
+const startComponents = (doc) => {
+    daysComp    = doc.querySelector('#days-text')
+    hoursComp   = doc.querySelector('#hours-text')
+    minutesComp = doc.querySelector('#minutes-text')
+    secondsComp = doc.querySelector('#seconds-text')
+    titleComp   = doc.querySelector('#counter-title')
+    timeBoxComp = doc.querySelector('#time-box')
+}
+
+/**
+ * Recuperamos os componentes de label das contagens (dias, horas, etc.)
+ * @param {*} doc O documento para recuperar os componentes html, de label, por 'query selector'
+ */
+const startLabelComponents = (doc) => {
+    daysLabelComp    = doc.querySelector('#days-title')
+    // console.log(`days %j`, daysLabelComp)
+    hoursLabelComp   = doc.querySelector('#hours-title')
+    // console.log(`hours %j`, hoursLabelComp)
+    minutesLabelComp = doc.querySelector('#minutes-title')
+    // console.log(`minutes %j`, minutesLabelComp)
+    secondsLabelComp = doc.querySelector('#seconds-title')
+    // console.log(`seconds %j`, secondsLabelComp)
 }
 
 // Quando carregar o document
 document.addEventListener('DOMContentLoaded', function(evt) {
 
     // Iniciamos os componentes (pegamos eles do documento)
-    daysComp    = document.querySelector('#days-text')
-    hoursComp   = document.querySelector('#hours-text')
-    minutesComp = document.querySelector('#minutes-text')
-    secondsComp = document.querySelector('#seconds-text')
-    titleComp   = document.querySelector('#counter-title')
-    timeBoxComp = document.querySelector('#time-box')
-    bodyComp    = document.body
+    startComponents(document)
+
+    // Iniciamos o bodyComp com o body do documento
+    bodyComp = document.body
+
+    // Iniciamos os componentes de label (do documento)
+    startLabelComponents(document)
 
     // Rodamos a função de cálculo agora...
     calculateTime()
